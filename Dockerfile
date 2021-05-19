@@ -4,4 +4,4 @@ RUN yum -y install php httpd
 
 COPY test.php /var/www/html/
 
-CMD ["/usr/sbin/httpd", "-DFOREGROUND"]
+ENTRYPOINT ["/usr/sbin/httpd", "-DFOREGROUND"]
