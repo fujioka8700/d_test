@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+    # MySQLのサービス(コンテナ)の定義
+    mysql:
+        # DockerHubからMySQLの公式イメージを取得
+        image: mysql:8.0.20
+
+        # MySQLのコンテナの/var/lib/mysqlというディレクトリを、
+        # ホストOS(PC)上に作成したボリュームdb_dataにマウントしています。
+        volumes:
+            - db_data:/var/lib/mysql
+
+        # restartポリシーの定義。
+        # alwaysにするとホストOSやDockerデーモン起動時にコンテナが自動的に起動
+        restart: always
+
+        # コンテナに与える環境変数を定義
+        # MySQLのコンテナは、データベース構築に必要な情報を環境変数で定義する
+        environment:
+            MYSQL_ROOT_PASSWORD: wordpress
+            MYSQL_DATABASE: wordpress
+            MYSQL_USER: wordpress
+            MYSQL_PASSWORD: wordpress
+
+    wordpress:
+        # 起動順序を制御
+        # WordPressはMySQLに接続するので、WordPressよりも先にMySQLを起動するよう順番を制御
+        depends_on:
+            - mysql
+
+        # WordPressの公式イメージを取得する定義
+        image: wordpress:php7.4-apache
+
+        # PCのlocalostの80番ポートあてにアクセスすると、
+        # コンテナの80番ポートあてに転送させるための定義
+        ports:
+            - "80:80"
+
+        restart: always
+        environment:
+            # 同じdocker-conpose.yml内で定義したコンテナ同士は、サービス名でアクセスできるようになっている
+            # これは、Dockerのネットワーク特有の機能である
+            WORDPRESS_DB_HOST: mysql:3306
+
+            WORDPRESS_DB_USER: wordpress
+            WORDPRESS_DB_PASSWORD: wordpress
+
+# ホストOS(PC)上にボリュームを定義。
+# これでdb_dataという名前のデータ保存領域がホストOS(PC)上に作成される
+volumes:
+    db_data:
