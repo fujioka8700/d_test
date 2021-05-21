@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+    httpd:
+        image: httpd:2.4
+
+        # コンテナの/usr/local/apache2/htdocs/を、
+        # ホストOSを(PC)上の/home/ntakei/htmlにマウントさせることができる。
+        # ホストOSを(PC)上の/home/ntakei/htmlに配置したファイルは、
+        # Apacheのドキュメントルート上のファイルとして参照される。
+        volumes:
+            # - /home/ntakei/html:/usr/local/apache2/htdocs/ # 絶対パス
+            - ./home/ntakei/html:/usr/local/apache2/htdocs/  # 相対パス
+
+        ports:
+            - "80:80"
