@@ -13,6 +13,7 @@
         <li>北海道</li>
         <li>東京</li>
         <li>大阪</li>
+        <li>山口</li>
         <li>福岡</li>
     </ul>
 </body>
