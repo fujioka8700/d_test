@@ -8,6 +8,6 @@
 </head>
 <body>
     <p>サンプルだよー</p>
-    <p>Hello</p>
+    <p>こんにちは</p>
 </body>
 </html>
