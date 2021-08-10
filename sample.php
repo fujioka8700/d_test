@@ -14,6 +14,7 @@
         <li>東京</li>
         <li>大阪</li>
         <li>福岡</li>
+        <li>長崎</li>
     </ul>
 </body>
 </html>
